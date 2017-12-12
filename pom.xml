@@ -6,7 +6,7 @@
 	<groupId>de.esg.ax.devops</groupId>
 	<artifactId>aggregation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>aggregation</name>
 	<description>Aggregation service for ESG DevOps Exploration Project</description>
@@ -78,6 +78,8 @@
 	</dependencyManagement>
 
 	<build>
+		<!-- standard AWS EB Java artifact name -->
+		<finalName>application</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
