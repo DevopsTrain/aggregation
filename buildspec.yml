@@ -12,5 +12,5 @@ phases:
 artifacts:
   files:
     - target/aggregation-0.0.1-SNAPSHOT.war
-    - Dockerfile
+    - Dockerfile.local
     - Dockerrun.aws.json
