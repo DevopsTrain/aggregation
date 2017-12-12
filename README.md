@@ -27,13 +27,15 @@ Deploy to your Java Servlet 3+ container of choice or just directly run the exec
 java -jar target/aggregation-0.0.1-SNAPSHOT.war
 ```
 
+To do the same using Docker use the included basic `Dockerfile`. 
+
+
 Or if a proxy has to be used:
 
 ```
 java -Dhttp.proxyHost=proxy.domain.xy -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.domain.xy -Dhttps.proxyPort=3128 -Dhttps.proxySet=true -jar target/aggregation-0.0.1-SNAPSHOT.war
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
 
 
 ### The API
@@ -41,4 +43,5 @@ End with an example of getting some data out of the system or using it for a lit
 GET \<service>/api/vehiclestatus/{vin}
 
 
-GET \<service>/api/live
+GET \<service>/api/live  
+--> HTTP 200
