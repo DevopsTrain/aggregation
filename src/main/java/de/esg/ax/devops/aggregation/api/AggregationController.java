@@ -35,7 +35,7 @@ public class AggregationController {
 	private Environment env;
 
 	/**
-	 * Retrieval method to aggregate backend status services responses.
+	 * Retrieval method to aggregate responses from the backend status services.
 	 *
 	 * @param vin
 	 * 		- the vehicle's identification number
@@ -46,9 +46,6 @@ public class AggregationController {
 	 */
 	@RequestMapping(value = "/api/vehiclestatus/{vin}", method = RequestMethod.GET)
 	public VehicleStatus retrieveVehicleStatus(@PathVariable String vin, RestTemplate restTemplate) {
-		//return new VehicleStatus("B2V2011", new VehicleStatus.GeoPosition(48.1936d, 11.5705d, false), new VehicleStatus.BatteryStatus(
-		//		(short) 34, true));
-
 		LOG.info("Received vehiclestatus request for {}", vin);
 
 		final long staleEpoch_ms = System.currentTimeMillis() - THRESHOLD_STALE_MS;
@@ -76,6 +73,8 @@ public class AggregationController {
 			LOG.warn("Calling BatteryStatus service failed with exception: {}", e.getMessage());
 			//TODO fallback to latest status from local DB
 		}
+
+		LOG.info("Responding to vehiclestatus request for {}", vin);
 
 		// if both esis failed to return anything, we will just move on, hystrix will take care of it!
 		return new VehicleStatus(vin, (pos != null) ?
