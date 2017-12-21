@@ -15,3 +15,4 @@ artifacts:
     - target/application.jar
     - target/newrelic.jar
     - newrelic/newrelic.yml
+    - Procfile
