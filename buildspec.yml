@@ -12,3 +12,5 @@ phases:
 artifacts:
   files:
     - target/application.jar
+    - target/newrelic.jar
+    - newrelic/newrelic.yml

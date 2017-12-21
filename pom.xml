@@ -96,15 +96,28 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>src/main/resources/newrelic</directory>
-                            <targetPath>WEB-INF/lib</targetPath>
-                            <filtering>false</filtering>
-                        </resource>
-                    </webResources>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>com.newrelic.agent.java</groupId>
+                            <artifactId>newrelic-agent</artifactId>
+                            <version>${newrelic.agent.version}</version>
+                            <type>jar</type>
+                            <destFileName>newrelic.jar</destFileName>
+                        </artifactItem>
+                    </artifactItems>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
