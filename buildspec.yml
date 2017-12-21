@@ -10,6 +10,7 @@ phases:
       - echo Build completed on `date`
       - mvn package
 artifacts:
+  discard-paths: yes
   files:
     - target/application.jar
     - target/newrelic.jar
