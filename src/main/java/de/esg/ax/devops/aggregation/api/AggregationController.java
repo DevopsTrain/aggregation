@@ -99,7 +99,7 @@ public class AggregationController {
 	 * @return Simple String message and HTTP 500 on erroneous api invocation
 	 */
 	@ExceptionHandler(Throwable.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) // , reason = "Whooops..."
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody
 	String handleExceptions() {
 		return "Whooops...";
