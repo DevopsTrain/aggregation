@@ -9,11 +9,13 @@ phases:
     commands:
       - echo Build completed on `date`
       - mvn package
+      - mv target/*.jar .
+      - mv newrelic/newrelic.yml newrelic.yml
 artifacts:
-  discard-paths: yes
+  discard-paths: no
   files:
-    - target/application.jar
-    - target/newrelic.jar
-    - newrelic/newrelic.yml
+    - application.jar
+    - newrelic.jar
+    - newrelic.yml
     - Procfile
     - .ebextensions/*
