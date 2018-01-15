@@ -19,3 +19,4 @@ artifacts:
     - newrelic.yml
     - Procfile
     - .ebextensions/**/*
+    - .ebextensions/*
