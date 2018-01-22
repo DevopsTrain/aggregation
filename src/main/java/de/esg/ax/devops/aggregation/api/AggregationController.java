@@ -48,6 +48,12 @@ public class AggregationController {
 	public VehicleStatus retrieveVehicleStatus(@PathVariable String vin, RestTemplate restTemplate) {
 		LOG.info("Received vehiclestatus request for {}", vin);
 
+
+		// special trigger for throwing errors: vin param is all zeroes (length does not matter)
+		if(vin.matches("^0+$")) {
+			throw new RuntimeException("Error trigger has been called to provoke an exception");
+		}
+
 		final long staleEpoch_ms = System.currentTimeMillis() - THRESHOLD_STALE_MS;
 
 		GeoPosition pos = null;
@@ -101,7 +107,8 @@ public class AggregationController {
 	@ExceptionHandler(Throwable.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody
-	String handleExceptions() {
+	String handleExceptions(Exception e) {
+		LOG.error("An exception occured: " + e.getMessage());
 		return "Whooops...";
 	}
 
