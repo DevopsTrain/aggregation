@@ -1,5 +1,8 @@
 package de.esg.ax.devops.aggregation.api;
 
+import de.esg.ax.devops.aggregation.api.entity.VehicleStatus;
+import de.esg.ax.devops.aggregation.esi.entity.BatteryStatus;
+import de.esg.ax.devops.aggregation.esi.entity.GeoPosition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,19 +10,11 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import de.esg.ax.devops.aggregation.api.entity.VehicleStatus;
-import de.esg.ax.devops.aggregation.esi.entity.BatteryStatus;
-import de.esg.ax.devops.aggregation.esi.entity.GeoPosition;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Spring REST entrypoint
@@ -30,6 +25,8 @@ public class AggregationController {
 	private static final Logger LOG = LoggerFactory.getLogger(AggregationController.class);
 
 	private static final long THRESHOLD_STALE_MS = 600000l; // 10 min threshold until data is considered stale
+
+    private static final String ERROR_TRIGGER_MSG = "Error trigger has been called to provoke an exception";
 
 	@Autowired
 	private Environment env;
@@ -47,6 +44,20 @@ public class AggregationController {
 	@RequestMapping(value = "/api/vehiclestatus/{vin}", method = RequestMethod.GET)
 	public VehicleStatus retrieveVehicleStatus(@PathVariable String vin, RestTemplate restTemplate) {
 		LOG.info("Received vehiclestatus request for {}", vin);
+
+
+		// special trigger for throwing errors: vin param is all zeroes (length does not matter)
+		if(vin.matches("^0+$")) {
+		    // throw in some variance and randomize for different exception types
+            switch (ThreadLocalRandom.current().nextInt(3)) {
+                case 0:
+                    throw new RestClientException(ERROR_TRIGGER_MSG);
+                case 1:
+                    throw new NullPointerException(ERROR_TRIGGER_MSG);
+                case 2:
+                    throw new RuntimeException(ERROR_TRIGGER_MSG);
+            }
+        }
 
 		final long staleEpoch_ms = System.currentTimeMillis() - THRESHOLD_STALE_MS;
 
@@ -101,7 +112,8 @@ public class AggregationController {
 	@ExceptionHandler(Throwable.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody
-	String handleExceptions() {
+	String handleExceptions(Exception e) {
+		LOG.error("An exception occured: " + e.getMessage(),e);
 		return "Whooops...";
 	}
 
