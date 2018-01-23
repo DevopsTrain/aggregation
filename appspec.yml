@@ -29,6 +29,8 @@ files:
     destination: /app
   - source: /run.sh
     destination: /app
+  - source: /.ebextensions
+    destination: /app
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
