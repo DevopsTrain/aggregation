@@ -1,0 +1,1 @@
+java -javaagent:/app/newrelic.jar -jar /app/application.jar
