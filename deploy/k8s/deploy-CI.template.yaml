@@ -53,7 +53,7 @@ spec:
         app: aggregation
     spec:
       containers:
-      - image: devopstrain/aggregation:latest
+      - image: devopstrain/aggregation:${BUILD_NUMBER}
         imagePullPolicy: Always
         name: aggregation
         ports:
