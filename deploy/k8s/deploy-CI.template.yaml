@@ -1,51 +1,18 @@
-#---
-#apiVersion: extensions/v1beta1
-#kind: Deployment
-#metadata:
-#  creationTimestamp: null
-#  labels:
-#    app: aggregation
-#  name: aggregation
-#  namespace: devopstrain
-#spec:
-#  replicas: 2
-#  selector:
-#    matchLabels:
-#      app: aggregation
-#  strategy: {}
-#  template:
-#    metadata:
-#      creationTimestamp: null
-#      labels:
-#        app: aggregation
-#    spec:
-#      containers:
-#      - image: devopstrain/aggregation:latest
-#        name: aggregation
-#        resources: {}
-#status: {}
 ---
 apiVersion: apps/v1beta1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  annotations:
   creationTimestamp: null
   labels:
     app: aggregation
   name: aggregation
   namespace: devopstrain
-#  ownerReferences:
-#  - apiVersion: extensions/v1beta1
-#    blockOwnerDeletion: true
-#    controller: true
-#    kind: Deployment
-#    name: aggregation
-#  selfLink: /apis/extensions/v1beta1/namespaces/default/replicasets/aggregation
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: aggregation
+  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -115,4 +82,3 @@ spec:
         backend:
           serviceName: aggregation
           servicePort: 80
----
