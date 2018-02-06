@@ -12,6 +12,6 @@ import lombok.Data;
 public class BatteryStatus {
 	private final Short chargedPercentage;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy HH:mm:ss a")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy HH:mm:ss")
 	private final Date lastCheck;
 }
