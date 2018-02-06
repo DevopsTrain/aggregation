@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Spring REST entrypoint
  */
 @RestController
+@CrossOrigin
 public class AggregationController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AggregationController.class);
