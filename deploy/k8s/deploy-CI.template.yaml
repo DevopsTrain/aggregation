@@ -76,7 +76,7 @@ metadata:
   namespace: devopstrain
 spec:
   rules:
-  - host: aggregation.devopstrain.spc5jcoyw7.stackpoint.io
+  - host: aggregation.devopstrain.spc3i9uigt.stackpoint.io
     http:
       paths:
       - path:
